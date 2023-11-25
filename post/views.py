@@ -1,14 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 
-from post.models import Product, Category
-
-
-# Create your views here.
-def main_page(request):
-    if request.method == 'GET':
-        return render(request, 'main_page.html')
-
+from post.models import Category, Product
 
 def hello_view(request):
     if request.method == 'GET':
@@ -41,4 +34,11 @@ def products_view(request):
 def category_list(request):
     if request.method == 'GET':
         categories = Category.objects.all()
-        return render(request, 'category_list.html', {'categories': categories})
+        return render(request, 'products/category_list.html', {'categories': categories})
+
+
+def category_products(request, category_id):
+    category = get_object_or_404(Category, id=category_id)
+    products = Product.objects.filter(category=category)
+    context = {"category": category, "products": products}
+    return render(request, 'products/products_page.html', context)

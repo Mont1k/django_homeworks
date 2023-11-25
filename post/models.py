@@ -21,6 +21,6 @@ class Product(models.Model):
     update_at = models.DateTimeField(auto_now=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, default=None, null=True, blank=True)
 
+    def __str__(self) -> str:
 
-def __str__(self) -> str:
-    return f"{self.id} - {self.name}"
+        return f"{self.id} - {self.name}"

@@ -1,25 +1,31 @@
+<!-- products_page.html -->
+
 {% extends 'index.html' %}
 {% block content %}
     <div class="container mt-4">
+
+
+
         <h1>Products</h1>
-
-        {% for category in categories %}
-            <h2>{{ category.name }}</h2>
-
-            <div class="row">
-                {% for product in products %}
-                    <div class="col-md-4 mb-4">
-                        <div class="card" style="width: 18rem;">
-                            <img src="{{ product.image.url }}" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ product.name }}</h5>
-                                <p class="card-text">{{ product.characteristic }}</p>
-                                <a href="#" class="btn btn-primary">More</a>
-                            </div>
+        {% if category %}
+            <h2>Category: {{ category.name }}</h2>
+        {% endif %}
+        <div class="row">
+            {% for product in products %}
+                <div class="col-md-4 mb-4">
+                    <div class="card" style="width: 18rem;">
+                        <img src="{{ product.image.url }}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ product.name}}</h5>
+                            <p class="card-text">{{ product.characteristic }}</p>
+                            {% if product.category %}
+                                <p>Category: <a href="{% url 'category_products' product.category.id %}">{{ product.category.name }}</a></p>
+                            {% endif %}
+                            <a href="#" class="btn btn-primary">More</a>
                         </div>
                     </div>
-                {% endfor %}
-            </div>
-        {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}

@@ -17,7 +17,6 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from post import views
-from post.views import category_list
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,5 +25,7 @@ urlpatterns = [
     path('current_date/', views.current_date_view, name='current_date'),
     path('goodbye/', views.goodbye_view),
     path('products/', views.products_view),
-    path('categories/', category_list, name='category_list'),
+    path('categories/', views.category_list, name='category_list'),
+    path('categories/<int:category_id>/', views.category_products, name='category_products'),
+
 ]

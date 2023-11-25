@@ -1,17 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Categories</title>
-</head>
-<body>
+<!-- category_list.html -->
 
-<h1>Categories</h1>
-
-<ul>
-    {% for category in categories %}
-        <li>{{ category.name }}</li>
-    {% endfor %}
-</ul>
-
-</body>
-</html>
+{% extends 'index.html' %}
+{% block content %}
+    <div class="container mt-4">
+        <h1>Categories</h1>
+        <ul>
+            {% for category in categories %}
+                <li><a href="{% url 'category_products' category.id %}">{{ category.name }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
