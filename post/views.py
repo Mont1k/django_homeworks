@@ -3,6 +3,7 @@ from django.utils import timezone
 
 from post.models import Category, Product
 
+
 def hello_view(request):
     if request.method == 'GET':
         return render(request, 'hello_page.html')
@@ -42,3 +43,14 @@ def category_products(request, category_id):
     products = Product.objects.filter(category=category)
     context = {"category": category, "products": products}
     return render(request, 'products/products_page.html', context)
+
+
+def products_detail_view(request, product_id):
+    if request.method == 'GET':
+        product = Product.objects.get(id=product_id)
+
+    context = {
+        'product': product
+    }
+
+    return render(request, 'products/products_detail.html', context)

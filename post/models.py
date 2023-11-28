@@ -24,3 +24,11 @@ class Product(models.Model):
     def __str__(self) -> str:
 
         return f"{self.id} - {self.name}"
+
+
+class Review (models.Model):
+    product = models.ForeignKey('post.Product', on_delete=models.CASCADE, related_name='review')
+    text = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
