@@ -91,15 +91,19 @@ def category_create(request):
     return render(request, 'products/create_category.html', context)
 
 
-def review_create(request):
+def review_create(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+
     if request.method == 'POST':
         form = ReviewCreateForm(request.POST)
         if form.is_valid():
-            form.save()
+            review = form.save(commit=False)
+            review.product = product  
+            review.save()
             return redirect('/products')
 
     else:
         form = ReviewCreateForm()
 
-    context = {'form': form}
+    context = {'form': form, 'product': product}
     return render(request, 'products/create_review.html', context)

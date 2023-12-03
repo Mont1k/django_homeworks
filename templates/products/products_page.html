@@ -19,6 +19,7 @@
                             {% if product.category %}
                                 <p>Category: <a href="{% url 'category_products' product.category.id %}">{{ product.category.name }}</a></p>
                             {% endif %}
+                            <a href="{% url 'create_review' product.id %}" class="btn btn-primary">Add Review</a>
                             <a href="/product/{{ product.id }}" class="btn btn-primary">More</a>
                         </div>
                     </div>

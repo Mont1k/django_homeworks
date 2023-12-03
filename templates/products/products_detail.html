@@ -6,7 +6,7 @@
 
     <h2>
 
-        <a href ="/category" class="btn btn-primary">Category: {{ product.category.title }}</a>
+        <a href ="/categories" class="btn btn-primary">Category: {{ product.category.name }}</a>
 
     </h2>
 
@@ -21,12 +21,7 @@
     <h3>Reviews:</h3>
     {% for review in product.review.all %}
         <p>{{review.text}}</p>
-        <p>Created review: {{review.created_at}}</p>
         {% endfor %}
-
-    <h3>Dates:</h3>
-    <p>Created: {{product.create_at}}</p>
-    <p>Created: {{product.update_at}}</p>
 
 
 

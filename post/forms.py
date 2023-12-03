@@ -31,5 +31,5 @@ class CategoryCreateForm(forms.ModelForm):
 class ReviewCreateForm(forms.ModelForm):
     class Meta:
         model = Review
-        fields = ['product', 'text']
-        widgets = {'text': forms.Textarea(), }
+        fields = ['text']
+        widgets = {'text': forms.Textarea(), 'product': forms.HiddenInput()}
