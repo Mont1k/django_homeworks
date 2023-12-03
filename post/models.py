@@ -19,16 +19,13 @@ class Product(models.Model):
     characteristic = models.TextField()
     create_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, default=None, null=True, blank=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True, related_name='category')
 
     def __str__(self) -> str:
-
         return f"{self.id} - {self.name}"
 
 
-class Review (models.Model):
+class Review(models.Model):
     product = models.ForeignKey('post.Product', on_delete=models.CASCADE, related_name='review')
     text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-
-

@@ -1,10 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "index.html" %}
 
-</body>
-</html>
+{% block content %}
+
+
+
+
+<h1>CREATE PRODUCT</h1>
+
+<form action="" method = "POST" enctype = "multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <input type="submit" value ="create">
+
+</form>
+
+
+
+
+
+
+{% endblock %}

@@ -1,6 +1,7 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 
+from post.forms import ProductCreateForm, CategoryCreateForm, ReviewCreateForm
 from post.models import Category, Product
 
 
@@ -54,3 +55,51 @@ def products_detail_view(request, product_id):
     }
 
     return render(request, 'products/products_detail.html', context)
+
+
+def product_create(request):
+    if request.method == 'GET':
+        context = {
+            'form': ProductCreateForm
+        }
+        return render(request, 'products/create_product.html', context)
+    if request.method == "POST":
+        form = ProductCreateForm(request.POST, request.FILES)
+        if form.is_valid():
+            Product.objects.create(**form.cleaned_data)
+
+            return redirect('/products')
+
+        context = {
+            'form': form
+        }
+
+    return render(request, 'products/create_category.html', context)
+
+
+def category_create(request):
+    if request.method == 'POST':
+        form = CategoryCreateForm(request.POST)
+        if form.is_valid():
+            form.save()  # сохраняет
+            return redirect('/categories')
+
+    else:
+        form = CategoryCreateForm()
+
+    context = {'form': form}
+    return render(request, 'products/create_category.html', context)
+
+
+def review_create(request):
+    if request.method == 'POST':
+        form = ReviewCreateForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/products')
+
+    else:
+        form = ReviewCreateForm()
+
+    context = {'form': form}
+    return render(request, 'products/create_review.html', context)
