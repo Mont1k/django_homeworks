@@ -18,17 +18,18 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="/products">Products</a>
         </li>
+
         <li class="nav-item">
           <a class="nav-link" href="/categories/">Categories</a>
         </li>
-{#          <li class="nav-item">#}
-{#              <a class="nav-link" href="/create_products">Create Product</a>#}
-{#        </li>#}
+      {% if user.is_authenticated %}
+            <a class="nav-link" href="/products/create_products/">Create Product</a>
+      {% endif %}
           <li class="nav-item">
+
               <a class="nav-link" href="/create_categories">Create Category</a>
           </li>
           {% if user.is_authenticated %}
-                    <a class="nav-link" href="/products/create_products/">Create Product</a>
                     <a class="nav-link" href="/users/logout/">Logout</a>
                     <a class="nav-link" href="/users/profile/">Profile</a>
                 {% else %}

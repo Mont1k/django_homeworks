@@ -31,7 +31,6 @@ def register_view(request):
             )
 
 
-
 def login_view(request):
     if request.method == 'GET':
         context = {

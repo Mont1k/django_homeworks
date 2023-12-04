@@ -1,24 +1,8 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
-from django.utils import timezone
 
 from post.forms import ProductCreateForm, CategoryCreateForm, ReviewCreateForm
 from post.models import Category, Product
-
-
-def hello_view(request):
-    if request.method == 'GET':
-        return render(request, 'hello_page.html')
-
-
-def current_date_view(request):
-    current_data = timezone.localtime()
-    if request.method == 'GET':
-        return render(request, 'current_date_page.html', {'current_date': current_data})
-
-
-def goodbye_view(request):
-    if request.method == 'GET':
-        return render(request, 'goodbye_page.html')
 
 
 def index_view(request):
@@ -28,15 +12,21 @@ def index_view(request):
 
 def products_view(request):
     if request.method == 'GET':
-        products = Product.objects.all()
-        context = {"products": products}
-        return render(request, 'products/products_page.html', context)
+        if request.user.is_authenticated:
+            products = Product.objects.all()
+            context = {"products": products}
+            return render(request, 'products/products_page.html', context)
+        else:
+            return redirect('/users/login/')
 
 
 def category_list(request):
     if request.method == 'GET':
-        categories = Category.objects.all()
-        return render(request, 'products/category_list.html', {'categories': categories})
+        if request.user.is_authenticated:
+            categories = Category.objects.all()
+            return render(request, 'products/category_list.html', {'categories': categories})
+        else:
+            return redirect('/users/login/')
 
 
 def category_products(request, category_id):
@@ -57,6 +47,7 @@ def products_detail_view(request, product_id):
     return render(request, 'products/products_detail.html', context)
 
 
+@login_required
 def product_create(request):
     if request.method == 'GET':
         context = {
@@ -77,6 +68,7 @@ def product_create(request):
     return render(request, 'products/create_category.html', context)
 
 
+@login_required
 def category_create(request):
     if request.method == 'POST':
         form = CategoryCreateForm(request.POST)
@@ -91,6 +83,7 @@ def category_create(request):
     return render(request, 'products/create_category.html', context)
 
 
+@login_required
 def review_create(request, product_id):
     product = get_object_or_404(Product, id=product_id)
 
@@ -98,7 +91,7 @@ def review_create(request, product_id):
         form = ReviewCreateForm(request.POST)
         if form.is_valid():
             review = form.save(commit=False)
-            review.product = product  
+            review.product = product
             review.save()
             return redirect('/products')
 
