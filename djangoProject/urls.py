@@ -17,22 +17,14 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+
 from post import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index_view, name='index_page'),
-    path('hello/', views.hello_view),
-    path('current_date/', views.current_date_view, name='current_date'),
-    path('goodbye/', views.goodbye_view),
-    path('products/', views.products_view),
-    path('categories/', views.category_list, name='category_list'),
-    path('categories/<int:category_id>/', views.category_products, name='category_products'),
-    path('product/<int:product_id>/', views.products_detail_view),
-    path('create_products', views.product_create),
-    path('create_categories', views.category_create),
-    path('create_reviews/<int:product_id>/', views.review_create, name='create_review'),
+    path('', include('post.urls')),
+    path('users/', include('users.urls')),
 
 ]
 
