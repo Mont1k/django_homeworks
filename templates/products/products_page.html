@@ -1,9 +1,15 @@
 <!-- products_page.html -->
-
 {% extends 'index.html' %}
 {% block content %}
     <div class="container mt-4">
         <h1>Products</h1>
+
+        <!-- Форма поиска -->
+        <form method="get" action="{% url 'products_view' %}">
+            <input type="text" name="search" placeholder="Search" value="{{ search_query }}">
+            <button type="submit">Search</button>
+        </form>
+
         {% if category %}
             <h2>Category: {{ category.name }}</h2>
         {% endif %}
@@ -11,7 +17,11 @@
             {% for product in products %}
                 <div class="col-md-4 mb-4">
                     <div class="card" style="width: 18rem;">
-                        <img src="{{ product.image.url }}" class="card-img-top" alt="...">
+                        {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                        {% else %}
+                        <p>No image available</p>
+                        {% endif %}
                         <div class="card-body">
                             <h5 class="card-title">{{ product.name}}</h5>
                             <h5 class="card-title">{{ product.price }}</h5>
@@ -19,12 +29,31 @@
                             {% if product.category %}
                                 <p>Category: <a href="{% url 'category_products' product.category.id %}">{{ product.category.name }}</a></p>
                             {% endif %}
-                            <a href="{% url 'create_review' product.id %}" class="btn btn-primary">Add Review</a>
-                            <a href="/product/{{ product.id }}" class="btn btn-primary">More</a>
+                            <a href="{% url 'product_detail' product.id %}" class="btn btn-primary">More</a>
+                            <a href="{% url 'product_edit' product.id %}" class="btn btn-primary">Edit</a>
+
                         </div>
                     </div>
                 </div>
             {% endfor %}
+        </div>
+
+        <!-- Пагинация -->
+        <div class="pagination">
+            <span class="step-links">
+                {% if products.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ products.previous_page_number }}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ products.number }} of {{ products.paginator.num_pages }}.
+                </span>
+
+                {% if products.has_next %}
+                    <a href="?page={{ products.next_page_number }}">next</a>
+                {% endif %}
+            </span>
         </div>
     </div>
 {% endblock %}

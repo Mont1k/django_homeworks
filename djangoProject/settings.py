@@ -301,3 +301,4 @@ JAZZMIN_UI_TWEAKS = {
     }
 }
 LOGIN_URL = '/users/login/'
+

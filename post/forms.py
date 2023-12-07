@@ -1,6 +1,6 @@
 from django import forms
 
-from post.models import Category, Review
+from post.models import Category, Review, Product
 
 
 class ProductCreateForm(forms.Form):
@@ -33,3 +33,9 @@ class ReviewCreateForm(forms.ModelForm):
         model = Review
         fields = ['text']
         widgets = {'text': forms.Textarea(), 'product': forms.HiddenInput()}
+
+
+class ProductEdit(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ['name', 'characteristic', 'price', 'category', 'image', ]

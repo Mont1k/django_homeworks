@@ -17,6 +17,7 @@
 
     <h2>pice: {{product.price}}</h2>
     <p>{{product.content}}</p>
+    <a href="{% url 'create_review' product.id %}" class="btn btn-primary">Add Review</a>
 
     <h3>Reviews:</h3>
     {% for review in product.review.all %}
